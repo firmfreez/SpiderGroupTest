@@ -38,7 +38,7 @@ class AndroidModule(private val application: App) {
     @Singleton
     fun provideApi(gson: Gson, httpClient: OkHttpClient): Api {
         val retrofit = Retrofit.Builder()
-                .baseUrl("")
+                .baseUrl(Api.BASE_URL)
                 .client(httpClient)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(DownloadCallAdapterFactory.create())

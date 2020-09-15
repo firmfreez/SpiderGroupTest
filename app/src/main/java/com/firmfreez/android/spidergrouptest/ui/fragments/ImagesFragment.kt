@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.firmfreez.android.spidergrouptest.ui.viewModels.ImagesViewModel
 import com.firmfreez.android.spidergrouptest.R
 import com.firmfreez.android.spidergrouptest.databinding.FragmentImagesBinding
@@ -21,9 +23,7 @@ class ImagesFragment : BaseFragment() {
         binding = FragmentImagesBinding.bind(view)
         setToolbar("Главный экран", false, binding.root)
         binding.viewModel = ViewModelProvider(this).get(ImagesViewModel::class.java)
-        binding.button.setOnClickListener {
-            navigate(R.id.action_imagesFragment_to_selectedImageFragment)
-        }
+        binding.list.layoutManager = StaggeredGridLayoutManager(3,RecyclerView.VERTICAL)
         return binding.root
     }
 
