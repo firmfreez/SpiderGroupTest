@@ -5,12 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.firmfreez.android.spidergrouptest.ui.viewModels.ImagesViewModel
 import com.firmfreez.android.spidergrouptest.R
+import com.firmfreez.android.spidergrouptest.adapters.GalleryImagesAdapter
 import com.firmfreez.android.spidergrouptest.databinding.FragmentImagesBinding
 import com.firmfreez.android.spidergrouptest.utils.navigate
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class ImagesFragment : BaseFragment() {
     private lateinit var binding: FragmentImagesBinding
@@ -23,8 +27,25 @@ class ImagesFragment : BaseFragment() {
         binding = FragmentImagesBinding.bind(view)
         setToolbar("Главный экран", false, binding.root)
         binding.viewModel = ViewModelProvider(this).get(ImagesViewModel::class.java)
-        binding.list.layoutManager = StaggeredGridLayoutManager(3,RecyclerView.VERTICAL)
+
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.list.apply {
+            layoutManager = StaggeredGridLayoutManager(3, RecyclerView.VERTICAL)
+            setHasFixedSize(true)
+            adapter = GalleryImagesAdapter()
+        }
+
+        initAdapter()
+    }
+
+    private fun initAdapter() {
+        lifecycleScope.launch {
+            binding.viewModel?.movies?.collectLatest {
+                (binding.list.adapter as? GalleryImagesAdapter)?.submitData(it)
+            }
+        }
+    }
 }
