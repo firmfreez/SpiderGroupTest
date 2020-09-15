@@ -24,11 +24,4 @@ class ImagesViewModel : ViewModel() {
     val movies: Flow<PagingData<GalleryItems.ImagesItem>> = Pager(PagingConfig(pageSize = 10)) {
         GalleryImagesDataSource(galleryService)
     }.flow.cachedIn(viewModelScope)
-
-
-
-    fun getImageHeight(data: GalleryItems.DataItem) {
-
-    }
-
 }

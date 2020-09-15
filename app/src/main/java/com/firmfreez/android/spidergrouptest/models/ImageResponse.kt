@@ -1,0 +1,14 @@
+package com.firmfreez.android.spidergrouptest.models
+
+import com.google.gson.annotations.SerializedName
+
+data class ImageResponse(
+	@field:SerializedName("data")
+	val data: GalleryItems.ImagesItem? = null,
+
+	@field:SerializedName("success")
+	val success: Boolean? = null,
+
+	@field:SerializedName("status")
+	val status: Int? = null
+)

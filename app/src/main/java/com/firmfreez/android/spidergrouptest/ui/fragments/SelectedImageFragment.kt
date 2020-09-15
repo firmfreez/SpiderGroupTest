@@ -30,13 +30,13 @@ class SelectedImageFragment : BaseFragment() {
         setToolbar("Следующий фрагмент", true, binding.root)
         binding.viewModel = ViewModelProvider(this).get(SelectedImageViewModel::class.java)
 
-        id = savedInstanceState?.getString(ITEM_ID)
+        id = arguments?.getString(ITEM_ID)
         binding.textView.text = id
 
         return binding.root
     }
 
     companion object {
-        const val ITEM_ID = "item_id"
+        const val ITEM_ID = "url"
     }
 }

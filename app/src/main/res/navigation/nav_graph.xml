@@ -22,5 +22,10 @@
         android:id="@+id/selectedImageFragment"
         android:name="com.firmfreez.android.spidergrouptest.ui.fragments.SelectedImageFragment"
         android:label="selected_image_fragment"
-        tools:layout="@layout/fragment_selected_image" />
+        tools:layout="@layout/fragment_selected_image">
+        <argument
+            android:name="url"
+            app:argType="string" />
+    </fragment>
+
 </navigation>

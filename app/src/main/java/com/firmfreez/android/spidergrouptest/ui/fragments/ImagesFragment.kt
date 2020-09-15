@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
@@ -37,10 +38,10 @@ class ImagesFragment : BaseFragment() {
             layoutManager = StaggeredGridLayoutManager(3, RecyclerView.VERTICAL)
             addItemDecoration(GridItemDecoration(10,3))
 //            setHasFixedSize(true)
+
             binding.viewModel?.let { adapter = GalleryImagesAdapter(it) {
-                navigate(R.id.action_imagesFragment_to_selectedImageFragment, Bundle().apply {
-                    putString(SelectedImageFragment.ITEM_ID, it)
-                })
+                val bundle = bundleOf("url" to it)
+                navigate(R.id.action_imagesFragment_to_selectedImageFragment, bundle)
             } }
         }
 
