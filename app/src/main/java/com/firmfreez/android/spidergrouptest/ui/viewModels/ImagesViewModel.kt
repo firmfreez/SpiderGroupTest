@@ -13,6 +13,9 @@ import com.firmfreez.android.spidergrouptest.ui.dataSources.GalleryImagesDataSou
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
+/**
+ * ViewModel отвечает за загрузку данных для RecyclerView используя Flow
+ */
 class ImagesViewModel : ViewModel() {
     @Inject lateinit var galleryService: GalleryService
 
@@ -20,7 +23,7 @@ class ImagesViewModel : ViewModel() {
         App.instance.component?.inject(this)
     }
 
-    //Получения списка изображений используя PagingLibrary3
+    //Получения списка изображений
     val movies: Flow<PagingData<GalleryItems.ImagesItem>> = Pager(PagingConfig(pageSize = 10)) {
         GalleryImagesDataSource(galleryService)
     }.flow.cachedIn(viewModelScope)

@@ -6,9 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.firmfreez.android.spidergrouptest.R
@@ -17,6 +15,10 @@ import com.firmfreez.android.spidergrouptest.databinding.FragmentSelectedImageBi
 import com.firmfreez.android.spidergrouptest.ui.viewModels.SelectedImageViewModel
 import com.firmfreez.android.spidergrouptest.utils.toImgurUrl
 
+/**
+ * Фрагемент, отображающий фотографию, название, описание и список комметариев
+ * Вызывается по клику на элемент из GalleryImagesAdapter
+ */
 class SelectedImageFragment : BaseFragment() {
     private lateinit var binding: FragmentSelectedImageBinding
     private lateinit var id: String
@@ -30,7 +32,7 @@ class SelectedImageFragment : BaseFragment() {
         binding = FragmentSelectedImageBinding.bind(view)
         binding.lifecycleOwner = this
 
-        setToolbar("Следующий фрагмент", true, binding.root)
+        setToolbar("Подробнее", true, binding.root)
 
         id = arguments?.getString(ITEM_ID)?: "cJp4uY6"
         realImgId = arguments?.getString(REAL_IMG_URL)?: "8u3skSq"
@@ -57,7 +59,9 @@ class SelectedImageFragment : BaseFragment() {
     }
 
     companion object {
+        //id объекта изображения
         const val ITEM_ID = "url"
+        //id самой картинки
         const val REAL_IMG_URL = "realImgUrl"
     }
 

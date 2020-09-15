@@ -9,6 +9,10 @@ import com.firmfreez.android.spidergrouptest.services.GalleryService
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * ViewModel, необходимая для загрузки данных об изображении
+ * При успешной загрузке данные попадают в LiveData, откуда биндятся на xml или обсервятся во фрагменте
+ */
 class SelectedImageViewModel(id: String) : ViewModel() {
     @Inject lateinit var galleryService: GalleryService
 

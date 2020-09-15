@@ -4,6 +4,9 @@ import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
+/**
+ * Необходим для рамок вокруг элементов RecyclerView
+ */
 class GridItemDecoration(gridSpacingPx: Int, gridSize: Int) : RecyclerView.ItemDecoration() {
     private var mSizeGridSpacingPx: Int = gridSpacingPx
     private var mGridSize: Int = gridSize

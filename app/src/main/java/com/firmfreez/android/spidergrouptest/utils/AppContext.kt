@@ -9,6 +9,9 @@ import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import com.firmfreez.android.spidergrouptest.di.App
 
+/**
+ * По большому счету необходим для вызовов getString
+ */
 object AppContext {
     val instance: Context get() = App.instance.applicationContext
 

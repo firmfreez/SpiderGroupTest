@@ -18,6 +18,9 @@ import com.firmfreez.android.spidergrouptest.utils.navigate
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+/**
+ * Фрагмент отображает список популярных картинок
+ */
 class ImagesFragment : BaseFragment() {
     private lateinit var binding: FragmentImagesBinding
 
@@ -27,7 +30,7 @@ class ImagesFragment : BaseFragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_images, container, false)
         binding = FragmentImagesBinding.bind(view)
-        setToolbar("Главный экран", false, binding.root)
+        setToolbar("Популярные", false, binding.root)
         binding.viewModel = ViewModelProvider(this).get(ImagesViewModel::class.java)
 
         return binding.root

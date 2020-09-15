@@ -6,6 +6,11 @@ import com.firmfreez.android.spidergrouptest.services.GalleryService
 import java.lang.Exception
 import java.lang.NullPointerException
 
+
+/**
+ * Используется для пагинации
+ * Постранично загружает данные по мере необходимости
+ */
 class GalleryImagesDataSource (val galleryService: GalleryService): PagingSource<Int, GalleryItems.ImagesItem>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, GalleryItems.ImagesItem> {
         try {
