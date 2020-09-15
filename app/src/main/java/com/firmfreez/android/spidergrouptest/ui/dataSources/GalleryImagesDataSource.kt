@@ -6,13 +6,13 @@ import com.firmfreez.android.spidergrouptest.services.GalleryService
 import java.lang.Exception
 import java.lang.NullPointerException
 
-class GalleryImagesDataSource (private val galleryService: GalleryService): PagingSource<Int, GalleryItems.DataItem>() {
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, GalleryItems.DataItem> {
+class GalleryImagesDataSource (val galleryService: GalleryService): PagingSource<Int, GalleryItems.ImagesItem>() {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, GalleryItems.ImagesItem> {
         try {
             val nextPage = params.key?: 1
             val response = galleryService.getGalleryItemsOrNull(nextPage)
 
-            val resultData = response?.data
+            val resultData = response?.imageList
             return if(!resultData.isNullOrEmpty()) {
                 LoadResult.Page(
                     data = resultData,

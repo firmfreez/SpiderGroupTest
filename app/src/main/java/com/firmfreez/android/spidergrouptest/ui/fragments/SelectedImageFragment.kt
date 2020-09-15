@@ -11,6 +11,15 @@ import com.firmfreez.android.spidergrouptest.ui.viewModels.SelectedImageViewMode
 
 class SelectedImageFragment : BaseFragment() {
     private lateinit var binding: FragmentSelectedImageBinding
+    private var id: String? = null
+
+    fun newInstance(id: String): SelectedImageFragment{
+        val args = Bundle()
+        args.putString(id, ITEM_ID)
+        val fragment = SelectedImageFragment()
+        fragment.arguments = args
+        return fragment
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -21,7 +30,13 @@ class SelectedImageFragment : BaseFragment() {
         setToolbar("Следующий фрагмент", true, binding.root)
         binding.viewModel = ViewModelProvider(this).get(SelectedImageViewModel::class.java)
 
+        id = savedInstanceState?.getString(ITEM_ID)
+        binding.textView.text = id
 
         return binding.root
+    }
+
+    companion object {
+        const val ITEM_ID = "item_id"
     }
 }

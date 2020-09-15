@@ -5,11 +5,14 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.firmfreez.android.spidergrouptest.R
 import com.firmfreez.android.spidergrouptest.databinding.ItemGalleryImageBinding
 import com.firmfreez.android.spidergrouptest.models.GalleryItems.*
+import com.firmfreez.android.spidergrouptest.ui.viewModels.ImagesViewModel
+import kotlin.math.roundToInt
 
-class GalleryImagesAdapter: PagingDataAdapter<DataItem, GalleryImagesAdapter.GalleryImagesViewHolder>(ImageComparator) {
+class GalleryImagesAdapter(private val viewModel: ImagesViewModel, private val onItemClicked: (id: String) -> Unit): PagingDataAdapter<ImagesItem, GalleryImagesAdapter.GalleryImagesViewHolder>(ImageComparator) {
 
     override fun onBindViewHolder(holder: GalleryImagesViewHolder, position: Int) {
         getItem(position)?.let { holder.bind(it) }
@@ -21,23 +24,39 @@ class GalleryImagesAdapter: PagingDataAdapter<DataItem, GalleryImagesAdapter.Gal
         return GalleryImagesViewHolder(binding)
     }
 
-    inner class GalleryImagesViewHolder(val binding: ItemGalleryImageBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: DataItem) {
-            binding.textView.text = item.id
+    inner class GalleryImagesViewHolder(private val binding: ItemGalleryImageBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: ImagesItem) {
+            binding.root.setOnClickListener { item.id?.let { onItemClicked(it) } }
+
+            val coaf = (item.height?.toDouble()?: 0.0) / (item.width?.toDouble()?: 0.1)
+
+            val width = binding.root.width
+
+            val newHeight = width  * coaf
+            if(newHeight != 0.0) {
+                binding.image.layoutParams.height = newHeight.roundToInt()
+                binding.image.requestLayout()
+            }
+
+            Glide.with(binding.image)
+                .load(item.link)
+                .placeholder(R.color.colorAccent)
+                .error(R.color.colorPrimaryDark)
+                .into(binding.image)
         }
     }
 
-    object ImageComparator : DiffUtil.ItemCallback<DataItem>() {
+    object ImageComparator : DiffUtil.ItemCallback<ImagesItem>() {
         override fun areItemsTheSame(
-            oldItem: DataItem,
-            newItem: DataItem
+            oldItem: ImagesItem,
+            newItem: ImagesItem
         ): Boolean {
             return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(
-            oldItem: DataItem,
-            newItem: DataItem
+            oldItem: ImagesItem,
+            newItem: ImagesItem
         ): Boolean {
             return oldItem == newItem
         }

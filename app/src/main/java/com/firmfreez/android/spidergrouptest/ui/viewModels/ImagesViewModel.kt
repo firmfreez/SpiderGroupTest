@@ -21,8 +21,14 @@ class ImagesViewModel : ViewModel() {
     }
 
     //Получения списка изображений используя PagingLibrary3
-    val movies: Flow<PagingData<GalleryItems.DataItem>> = Pager(PagingConfig(pageSize = 60)) {
+    val movies: Flow<PagingData<GalleryItems.ImagesItem>> = Pager(PagingConfig(pageSize = 10)) {
         GalleryImagesDataSource(galleryService)
     }.flow.cachedIn(viewModelScope)
+
+
+
+    fun getImageHeight(data: GalleryItems.DataItem) {
+
+    }
 
 }

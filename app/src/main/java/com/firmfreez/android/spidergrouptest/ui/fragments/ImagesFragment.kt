@@ -12,6 +12,7 @@ import com.firmfreez.android.spidergrouptest.ui.viewModels.ImagesViewModel
 import com.firmfreez.android.spidergrouptest.R
 import com.firmfreez.android.spidergrouptest.adapters.GalleryImagesAdapter
 import com.firmfreez.android.spidergrouptest.databinding.FragmentImagesBinding
+import com.firmfreez.android.spidergrouptest.utils.GridItemDecoration
 import com.firmfreez.android.spidergrouptest.utils.navigate
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -34,8 +35,13 @@ class ImagesFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.list.apply {
             layoutManager = StaggeredGridLayoutManager(3, RecyclerView.VERTICAL)
-            setHasFixedSize(true)
-            adapter = GalleryImagesAdapter()
+            addItemDecoration(GridItemDecoration(10,3))
+//            setHasFixedSize(true)
+            binding.viewModel?.let { adapter = GalleryImagesAdapter(it) {
+                navigate(R.id.action_imagesFragment_to_selectedImageFragment, Bundle().apply {
+                    putString(SelectedImageFragment.ITEM_ID, it)
+                })
+            } }
         }
 
         initAdapter()

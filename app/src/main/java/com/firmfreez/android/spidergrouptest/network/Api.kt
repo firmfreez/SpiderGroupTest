@@ -8,7 +8,7 @@ import retrofit2.http.Path
 
 interface Api {
 
-    @GET("gallery/top/viral/day/{page}?showViral=true&mature=false&album_previews=false")
+    @GET("gallery/top/viral/day/{page}?showViral=true&mature=true&album_previews=true")
     @Headers("Authorization: Client-ID $CLIENT_ID")
     suspend fun getGalleryItems(@Path(value = "page", encoded = true) page: Int) : Response<GalleryItems>
 
