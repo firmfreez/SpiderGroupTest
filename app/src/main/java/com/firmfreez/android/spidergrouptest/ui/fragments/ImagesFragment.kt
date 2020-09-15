@@ -39,8 +39,8 @@ class ImagesFragment : BaseFragment() {
             addItemDecoration(GridItemDecoration(10,3))
 //            setHasFixedSize(true)
 
-            binding.viewModel?.let { adapter = GalleryImagesAdapter(it) {
-                val bundle = bundleOf("url" to it)
+            binding.viewModel?.let { adapter = GalleryImagesAdapter(it) { link, itemLink ->
+                val bundle = bundleOf("url" to link, "realImgUrl" to itemLink)
                 navigate(R.id.action_imagesFragment_to_selectedImageFragment, bundle)
             } }
         }

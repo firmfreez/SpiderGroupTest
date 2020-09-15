@@ -274,7 +274,7 @@ data class GalleryItems(
 		val section: Any? = null,
 
 		@field:SerializedName("title")
-		val title: Any? = null,
+		val title: String? = null,
 
 		@field:SerializedName("type")
 		val type: String? = null,
@@ -369,15 +369,15 @@ data class GalleryItems(
 		val newList = ArrayList<ImagesItem>()
 		data?.filter {
 			it?.link?.endsWith(".jpg") == true || it?.images?.getOrNull(0)?.link?.endsWith(".jpg") == true
-		}?.forEach {
+		}?.forEach { dataItem ->
 
-			var link: String
-			if(it?.link?.endsWith(".jpg") == true) {
-				link = it.link
+			var link: String = ""
+			if(dataItem?.link?.endsWith(".jpg") == true) {
+				dataItem.id?.let { link = it }
 			} else {
-				link = it?.images?.getOrNull(0)?.link?: ""
+				dataItem?.images?.getOrNull(0)?.id?.let { link = it }
 			}
-			newList.add(ImagesItem(id = it?.id, width = it?.width, height = it?.height, description = it?.description, title = it?.title, link = link))
+			newList.add(ImagesItem(id = dataItem?.id, width = dataItem?.width, height = dataItem?.height, description = dataItem?.description, title = dataItem?.title, link = link))
 		}
 
 		return newList

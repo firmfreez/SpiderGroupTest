@@ -10,9 +10,10 @@ import com.firmfreez.android.spidergrouptest.R
 import com.firmfreez.android.spidergrouptest.databinding.ItemGalleryImageBinding
 import com.firmfreez.android.spidergrouptest.models.GalleryItems.*
 import com.firmfreez.android.spidergrouptest.ui.viewModels.ImagesViewModel
+import com.firmfreez.android.spidergrouptest.utils.toImgurUrl
 import kotlin.math.roundToInt
 
-class GalleryImagesAdapter(private val viewModel: ImagesViewModel, private val onItemClicked: (id: String) -> Unit): PagingDataAdapter<ImagesItem, GalleryImagesAdapter.GalleryImagesViewHolder>(ImageComparator) {
+class GalleryImagesAdapter(private val viewModel: ImagesViewModel, private val onItemClicked: (id: String, realId: String) -> Unit): PagingDataAdapter<ImagesItem, GalleryImagesAdapter.GalleryImagesViewHolder>(ImageComparator) {
 
     override fun onBindViewHolder(holder: GalleryImagesViewHolder, position: Int) {
         getItem(position)?.let { holder.bind(it) }
@@ -26,7 +27,8 @@ class GalleryImagesAdapter(private val viewModel: ImagesViewModel, private val o
 
     inner class GalleryImagesViewHolder(private val binding: ItemGalleryImageBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ImagesItem) {
-            binding.root.setOnClickListener { item.id?.let { onItemClicked(it) } }
+            val itemLink: String = item.link ?: ""
+            binding.root.setOnClickListener { item.id?.let { onItemClicked(it, itemLink) } }
 
             val coaf = (item.height?.toDouble()?: 0.0) / (item.width?.toDouble()?: 0.1)
 
@@ -39,7 +41,7 @@ class GalleryImagesAdapter(private val viewModel: ImagesViewModel, private val o
             }
 
             Glide.with(binding.image)
-                .load(item.link)
+                .load(item.link?.toImgurUrl(false))
                 .placeholder(R.color.colorAccent)
                 .error(R.color.colorPrimaryDark)
                 .into(binding.image)
